@@ -22,10 +22,10 @@ namespace Catalog.Domain.Entities
         public int? AvailableStock { get; set; }
         public Guid? GenreId { get; set; }
         [ForeignKey("GenreId")]
-        public Genre? Genre { get; private set; }
+        public Genre? Genre { get; set; }
         public Guid? ArtistId { get; set; }
         [ForeignKey("ArtistId")]
-        public Artist? Artist { get; private set; }
+        public Artist? Artist { get; set; }
         public bool? IsInactive { get; set; }
     }
 }
