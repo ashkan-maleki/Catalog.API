@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Catalog.Domain.Entities;
 using Catalog.Domain.Repositories;
+using Catalog.Infrastructure.SchemaDefinitions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Infrastructure
@@ -18,6 +19,13 @@ namespace Catalog.Infrastructure
             : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(
+                new ItemEntitySchemaDefinition());
+            base.OnModelCreating(modelBuilder);
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
