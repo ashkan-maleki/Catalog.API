@@ -1,4 +1,6 @@
+using Catalog.API.Extensions;
 using Catalog.Infrastructure;
+using Catalog.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,5 +28,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MigrateDatabase<CatalogContext>(
+    (context, services) =>
+    {
+        ILogger<CatalogContextSeed> logger = services.GetService<ILogger<CatalogContextSeed>>();
+        CatalogContextSeed.SeedAsync(context, logger);
+    }
+);
 
 app.Run();
