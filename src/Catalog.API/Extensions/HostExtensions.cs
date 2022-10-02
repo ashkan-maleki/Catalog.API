@@ -8,7 +8,6 @@ namespace Catalog.API.Extensions
     {
         public static IHost MigrateDatabase<TContext>(
             this IHost host,
-            Action<TContext, IServiceProvider> seeder,
             int retry = 0)
             where TContext : DbContext
         {
@@ -24,7 +23,7 @@ namespace Catalog.API.Extensions
             {
                 logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(TContext).Name);
 
-                InvokeSeeder(seeder, context, services);
+                context.Database.Migrate();
 
                 logger.LogInformation("Migrated database associated with context {DbContextName}", typeof(TContext).Name);
             }
@@ -36,7 +35,7 @@ namespace Catalog.API.Extensions
                 {
                     retryForAvailability++;
                     System.Threading.Thread.Sleep(2000);
-                    MigrateDatabase<TContext>(host, seeder, retryForAvailability);
+                    MigrateDatabase<TContext>(host, retryForAvailability);
                 }
             }
 
@@ -49,7 +48,6 @@ namespace Catalog.API.Extensions
             IServiceProvider services)
             where TContext : DbContext
         {
-            context.Database.Migrate();
             seeder(context, services);
         }
     }
