@@ -8,6 +8,6 @@ namespace Catalog.Domain.Mappers
     {
         Item? Map(AddItemRequest? request);
         Item? Map(EditItemRequest? request);
-        ItemResponse Map(Item item);
+        ItemResponse? Map(Item? item);
     }
 }

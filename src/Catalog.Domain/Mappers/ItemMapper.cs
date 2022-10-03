@@ -6,6 +6,15 @@ namespace Catalog.Domain.Mappers;
 
 public class ItemMapper : IItemMapper
 {
+    private readonly IArtistMapper _artistMapper;
+    private readonly IGenreMapper _genreMapper;
+
+    public ItemMapper(IArtistMapper artistMapper, IGenreMapper genreMapper)
+    {
+        _artistMapper = artistMapper ?? throw new ArgumentNullException(typeof(ItemMapper).FullName);
+        _genreMapper = genreMapper ?? throw new ArgumentNullException(typeof(ItemMapper).FullName);
+    }
+
     public Item? Map(AddItemRequest? request) =>
         request is not null ? new Item
         {
@@ -46,8 +55,25 @@ public class ItemMapper : IItemMapper
                 } : null,
         } : null;
 
-    public ItemResponse Map(Item item)
-    {
-        throw new NotImplementedException();
-    }
+    public ItemResponse? Map(Item? request) =>
+        request is not null ? new ItemResponse
+        {
+            Name = request.Name,
+            Description = request.Description,
+            LabelName = request.LabelName,
+            PictureUri = request.PictureUri,
+            ReleaseDate = request.ReleaseDate,
+            Format = request.Format,
+            AvailableStock = request.AvailableStock,
+            GenreId = request.GenreId,
+            Genre = _genreMapper.Map(request.Genre),
+            ArtistId = request.ArtistId,
+            Artist = _artistMapper.Map(request.Artist),
+            Price = request.Price is not null ?
+                new MoneyResponse
+                {
+                    Currency = request.Price.Currency,
+                    Amount = request.Price.Amount
+                } : null,
+        } : null;
 }

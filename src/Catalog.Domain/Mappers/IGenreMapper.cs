@@ -12,14 +12,4 @@ namespace Catalog.Domain.Mappers
     {
         GenreResponse? Map(Genre? genre);
     }
-
-    class GenreMapper : IGenreMapper
-    {
-        public GenreResponse? Map(Genre? genre) => 
-            genre is not null ? new GenreResponse
-            {
-                GenreId = genre.GenreId,
-                GenreDescription = genre.GenreDescription
-            } : null;
-    }
 }
