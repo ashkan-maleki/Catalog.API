@@ -24,19 +24,23 @@ namespace Catalog.Infrastructure.Repositories
             => await _context.Items?.AsNoTracking()
                 .ToListAsync()!;
         public async Task<Item?> GetAsync(Guid id)
-            => await _context.Items?.AsNoTracking()
+            => await _context.Items!.AsNoTracking()
                 .Where(x => x.Id == id)
                 .Include(x => x.Genre)
                 .Include(x => x.Artist)
-                .FirstOrDefaultAsync()!;
+                .FirstOrDefaultAsync();
 
-        public Item? Add(Item item)
-            => _context.Items?.Add(item).Entity;
+        public Item Add(Item item)
+            => _context.Items!.Add(item).Entity;
 
-        public Item? Update(Item item)
+        public Item Update(Item item)
         {
             _context.Entry(item).State = EntityState.Modified;
             return item;
         }
+
+        public async Task<bool> AnyAsync(Guid id) =>
+            await _context.Items!
+                .AnyAsync(x => x.Id == id);
     }
 }

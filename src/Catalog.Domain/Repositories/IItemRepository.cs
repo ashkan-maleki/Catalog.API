@@ -2,11 +2,12 @@
 
 namespace Catalog.Domain.Repositories
 {
-    public interface IItemRepository
+    public interface IItemRepository : IRepository
     {
         Task<IReadOnlyList<Item>> GetAsync();
         Task<Item?> GetAsync(Guid id);
-        Item? Add(Item item);
-        Item? Update(Item item);
+        Item Add(Item item);
+        Item Update(Item item);
+        Task<bool> AnyAsync(Guid id);
     }
 }
