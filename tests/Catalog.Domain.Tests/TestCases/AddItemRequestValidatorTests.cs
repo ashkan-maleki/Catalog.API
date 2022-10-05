@@ -8,26 +8,26 @@ namespace Catalog.Domain.Tests.TestCases
 {
     public class AddItemRequestValidatorTests
     {
-        private readonly AddItemRequestValidator _validator;
+        private readonly TestValidationResult<AddItemRequest> _testValidationResult;
 
         public AddItemRequestValidatorTests()
         {
-            _validator = new AddItemRequestValidator();
+            var validator = new AddItemRequestValidator();
+            var addItemRequest = new AddItemRequest { Price = new Money() };
+            _testValidationResult = validator.TestValidate(addItemRequest);
         }
 
         [Fact]
         public void should_have_error_when_artist_id_is_null()
         {
-            var addItemRequest = new AddItemRequest { Price = new Money() };
-            _validator.TestValidate(addItemRequest)
+            _testValidationResult
                 .ShouldHaveValidationErrorFor(x => x.ArtistId);
         }
 
         [Fact]
         public void should_have_error_when_genre_id_is_null()
         {
-            var addItemRequest = new AddItemRequest { Price = new Money() };
-            _validator.TestValidate(addItemRequest)
+            _testValidationResult
                 .ShouldHaveValidationErrorFor(x => x.GenreId);
         }
     }
