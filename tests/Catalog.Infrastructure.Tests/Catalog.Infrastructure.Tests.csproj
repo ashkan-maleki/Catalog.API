@@ -30,16 +30,4 @@
     <ProjectReference Include="..\Catalog.Fixtures\Catalog.Fixtures.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Data\artist.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\genre.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

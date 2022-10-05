@@ -25,12 +25,6 @@ namespace Catalog.Infrastructure.Tests.TestCases
             _sut = new ItemRepository(_context);
         }
 
-        private DbContextOptions<CatalogContext>
-            SetUpDbContextOptions(string databaseName)
-        => new DbContextOptionsBuilder<CatalogContext>()
-                .UseInMemoryDatabase(databaseName: databaseName)
-                .Options;
-
         private Item GetTestItem(string description = "Description")
             => new()
             {
