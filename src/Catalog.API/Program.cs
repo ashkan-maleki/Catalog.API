@@ -1,4 +1,5 @@
 using Catalog.API.Extensions;
+using Catalog.Domain;
 using Catalog.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddDomainServices();
 
 //
 builder.Services.AddControllers();
